@@ -12,11 +12,26 @@ public class FileManager {
     JFrame frame;
     File file;
     String text;
-    String route;
 
 
     public FileManager(JFrame frame){
         this.frame = frame;
+    }
+
+    /**
+     * Metodo encargado de guardar el texto introducido en un fichero de texto
+     * @param text
+     */
+    public void saveFile(String text) {
+        if(file!=null){
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                bw.write(text);
+                JOptionPane.showMessageDialog(frame,"Se ha guardado el fichero "+file.getName()+" con exito");
+            } catch (IOException e) {
+                System.out.println("[Error de escritura del fichero "+file.getName()+"]");
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -50,6 +65,9 @@ public class FileManager {
     private void readFile(File file) {
         try(BufferedReader bf = new BufferedReader(new FileReader(file))){
             String line;
+            if(text==null){
+                text="";
+            }
             while((line = bf.readLine()) != null){
                 text+="\n"+line;
             }
@@ -65,19 +83,29 @@ public class FileManager {
     }
 
     /**
-     * Metodo encargado de guardar el texto introducido en un fichero de texto
+     * Metodo encargado de dar funcionalidad al botón de guardar como en la pestaña de archivo
      * @param text
      */
-    public void saveFile(String text) {
-        if(file!=null){
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-                bw.write(text);
-                JOptionPane.showMessageDialog(frame,"Se ha guardado el fichero "+file.getName()+" con exito");
-            } catch (IOException e) {
-                System.out.println("[Error de escritura del fichero "+file.getName()+"]");
-                e.printStackTrace();
-            }
+    public void saveAsFile(String text){
+        JFileChooser fileChooser = new JFileChooser("");
+        FileFilter filt = new FileNameExtensionFilter("*.txt", "txt");
+        fileChooser.setFileFilter(filt);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setApproveButtonText("Save");
+        fileChooser.setApproveButtonToolTipText("Guarda el archivo");
+        fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 
+        int result = fileChooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            file = fileChooser.getSelectedFile();
+            if(!file.getName().endsWith(".txt")){
+                File fileRenamed = new File(file.getAbsolutePath()+".txt");
+                file = fileRenamed;
+            }
+            saveFile(text);
+            System.out.println("[Selected file: " + this.file.getAbsolutePath() + " ]");
+        }else{
+            System.out.println("[Ningun archivo seleccionado]");
         }
 
     }

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import controller.FileManager;
 
 
 /**
@@ -120,7 +121,9 @@ public class Window {
         itemSaveAs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(fileWriteable){
+                    fm.saveAsFile(textArea.getText());
+                }
             }
         });
 
