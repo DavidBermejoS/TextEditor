@@ -1,10 +1,15 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+
 import controller.FileManager;
 
 
@@ -21,6 +26,11 @@ public class Window {
     JMenuItem itemSave;
     JMenuItem itemSaveAs;
     JMenuItem itemLoad;
+
+    JToolBar toolBar;
+
+    JButton buttonSave;
+    JButton buttonLoad;
 
     JTextArea textArea;
     FileManager fm;
@@ -39,6 +49,7 @@ public class Window {
 
     public void addComponents(){
         //agregado de barra de menu
+        frame.setLayout(new BorderLayout());
         menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
         menu = new JMenu("Archivo");
@@ -74,12 +85,29 @@ public class Window {
         itemExit.setMnemonic(KeyEvent.VK_E);
         menu.add(itemExit);
 
-
+        //agregado de campo de texto
         textArea = new JTextArea("\n\n\t[BIENVENIDO AL EDITOR DE TEXTO]\n\n\tPulsa Cargar para abrir un fichero...");
         textArea.setEnabled(false);
-        frame.add(textArea);
-    }
+        frame.add(textArea,BorderLayout.CENTER);
 
+
+        //agregado de toolbar
+        toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+
+        //agregado de botones en el toolbar
+        Icon loadIcon = new ImageIcon("resources/imagenes/fileopen.png");
+        buttonLoad = new JButton(loadIcon);
+        buttonLoad.setSize(50,50);
+        toolBar.add(buttonLoad);
+
+        Icon saveIcon = new ImageIcon("resources/imagenes/filesave.png");
+        buttonSave = new JButton(saveIcon);
+        toolBar.add(buttonSave);
+
+
+        frame.add(toolBar,BorderLayout.NORTH);
+    }
 
     public void addListeners(){
 
