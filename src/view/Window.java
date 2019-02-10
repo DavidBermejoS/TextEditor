@@ -8,10 +8,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
+import controller.DialogReplace;
 import controller.FileManager;
 
 
 /**
+ * <h2>Clase Window</h2>
+ *
  * @author David Bermejo Simon
  **/
 public class Window {
@@ -38,8 +41,10 @@ public class Window {
     boolean fileWriteable;
 
 
-
-
+    /**
+     * Constructor de la clase donde se da medidas a la ventana, se le da un titulo y se le
+     * asigna una operación de cierre. Ademas se instancia un objeto FileManager
+     */
     public Window(){
         this.frame = new JFrame("Editor de Texto Swing");
         this.frame.setBounds(0,0,800,600);
@@ -47,7 +52,9 @@ public class Window {
         fm = new FileManager(frame);
     }
 
-
+    /**
+     * Metodo encargado de agregar los componentes a la ventana
+     */
     public void addComponents(){
         //agregado de barra de menuFile
         frame.setLayout(new BorderLayout());
@@ -188,6 +195,16 @@ public class Window {
             }
         });
 
+        itemReplace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileWriteable){
+                    DialogReplace dialogReplace = new DialogReplace(frame,"Reemplazar",false,textArea);
+                }
+
+            }
+        });
+
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,6 +239,9 @@ public class Window {
     }
 
 
+    /**
+     * Metodo encargado de inicializar la ventana y hacerla visible
+     */
     public void startWindow(){
         this.frame.setVisible(true);
         addComponents();

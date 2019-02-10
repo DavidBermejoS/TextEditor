@@ -17,5 +17,8 @@ guardar y abrir fichero
 
 3. __v0.3.0__:
 - Implementación de la pestaña del menú editar y el item Reemplazar
+- Finalizada implementacion de funcionalidad del item reemplazar.
+- Creacion de la clase DialogReplace y finalizada implementacion de cuadro de dialogo Reemplazar y su respectiva funcionlidad
+- Comentada clase Window.
 
 
