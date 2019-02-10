@@ -2,11 +2,13 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import controller.DialogReplace;
 import controller.FileManager;
@@ -29,12 +31,17 @@ public class Window {
     JMenuItem itemSaveAs;
     JMenuItem itemLoad;
     JMenuItem itemReplace;
+    JMenuItem itemCopy;
+    JMenuItem itemPaste;
 
     JToolBar toolBar;
 
     JButton buttonSave;
     JButton buttonLoad;
     JButton buttonSaveAs;
+    JButton buttonCopy;
+    JButton buttonPaste;
+
 
     JTextArea textArea;
     FileManager fm;
@@ -102,6 +109,20 @@ public class Window {
         itemReplace.setMnemonic(KeyEvent.VK_R);
         menuEdit.add(itemReplace);
 
+
+        menuEdit.addSeparator();
+        //agregado boton copiar
+        itemCopy = new JMenuItem("Copiar");
+        itemCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.CTRL_MASK));
+        itemCopy.setMnemonic(KeyEvent.VK_C);
+        menuEdit.add(itemCopy);
+
+        //agregado boton pegar
+        itemPaste = new JMenuItem("Pegar");
+        itemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.CTRL_MASK));
+        itemPaste.setMnemonic(KeyEvent.VK_V);
+        menuEdit.add(itemPaste);
+
         //agregado de campo de texto
         textArea = new JTextArea("\n\n\t[BIENVENIDO AL EDITOR DE TEXTO]\n\n\tPulsa Cargar para abrir un fichero...");
         textArea.setEnabled(false);
@@ -125,6 +146,13 @@ public class Window {
         buttonSaveAs.setIcon(getIconImage("resources/imagenes/SaveAs.png"));
         toolBar.add(buttonSaveAs);
 
+        buttonCopy = new JButton();
+        buttonCopy.setIcon(getIconImage("resources/imagenes/copy.png"));
+        toolBar.add(buttonCopy);
+
+        buttonPaste = new JButton();
+        buttonPaste.setIcon(getIconImage("resources/imagenes/paste.png"));
+        toolBar.add(buttonPaste);
 
         frame.add(toolBar,BorderLayout.NORTH);
     }
@@ -205,6 +233,43 @@ public class Window {
             }
         });
 
+        itemCopy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(new StringSelection(textArea.getSelectedText()), null);
+            }
+        });
+
+        itemPaste.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable t = cb.getContents(this);
+
+                DataFlavor dataFlavorStringJava = null;
+                try {
+                    dataFlavorStringJava = new DataFlavor("application/x-java-serialized-object; class=java.lang.String");
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (t.isDataFlavorSupported(dataFlavorStringJava)) {
+                    String texto = null;
+                    try {
+                        texto = (String) t.getTransferData(dataFlavorStringJava);
+                        //se encarga de insertar el texto del portapapeles en la posicion del cursor
+                        textArea.insert(texto,textArea.getCaretPosition());
+                    } catch (UnsupportedFlavorException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -236,7 +301,47 @@ public class Window {
                 }
             }
         });
+
+
+        buttonCopy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(new StringSelection(textArea.getSelectedText()), null);
+            }
+        });
+
+        //fragmento obtenido de la página: http://chuwiki.chuidiang.org/index.php?title=Uso_del_Clipboard_del_sistema
+        buttonPaste.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable t = cb.getContents(this);
+
+                DataFlavor dataFlavorStringJava = null;
+                try {
+                    dataFlavorStringJava = new DataFlavor("application/x-java-serialized-object; class=java.lang.String");
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (t.isDataFlavorSupported(dataFlavorStringJava)) {
+                    String texto = null;
+                    try {
+                        texto = (String) t.getTransferData(dataFlavorStringJava);
+                        //se encarga de insertar el texto del portapapeles en la posicion del cursor
+                        textArea.insert(texto,textArea.getCaretPosition());
+                    } catch (UnsupportedFlavorException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            }
+        });
     }
+
 
 
     /**

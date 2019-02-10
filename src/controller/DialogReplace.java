@@ -16,6 +16,7 @@ public class DialogReplace extends JDialog {
     JButton buttonReplace;
     JButton buttonCancel;
 
+
     JTextArea textArea;
 
     public DialogReplace(JFrame owner, String title, boolean modal,  JTextArea textArea) {
