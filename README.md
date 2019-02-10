@@ -1,7 +1,7 @@
 # TextEditor
 Editor de Texto sencillo Realizado para el módulo de Desarrollo de Interfaces en el ciclo de Desarrollo para Aplicaciones Multiplataforma
 
-#### Actual Version = v0.6.0
+#### Actual Version = v1.0.0
 
 ## ChangeLog
 1.__v0.1.0__:
