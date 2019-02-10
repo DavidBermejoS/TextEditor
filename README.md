@@ -35,4 +35,6 @@ el boton de busqueda (hasta fin de busqueda)
 
 6.__v0.6.0__:
 - Implementación de items de menu para cambiar color de fondo y color de fuente
+- Documentadas clases
+
 
