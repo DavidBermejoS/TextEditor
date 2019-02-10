@@ -1,7 +1,7 @@
 # TextEditor
 Editor de Texto sencillo Realizado para el módulo de Desarrollo de Interfaces en el ciclo de Desarrollo para Aplicaciones Multiplataforma
 
-#### Actual Version = v0.2.0
+#### Actual Version = v0.3.0
 
 ## ChangeLog
 1. __v0.1.0__:
@@ -15,6 +15,7 @@ guardar y abrir fichero
 - Finalizada implementacion de botones de barra de herramientas (Abrir fichero, guardar, guardar como)
 
 
-
+3. __v0.3.0__:
+- Implementación de la pestaña del menú editar y el item Reemplazar
 
 
