@@ -1,7 +1,7 @@
 # TextEditor
 Editor de Texto sencillo Realizado para el módulo de Desarrollo de Interfaces en el ciclo de Desarrollo para Aplicaciones Multiplataforma
 
-#### Actual Version = v0.4.0
+#### Actual Version = v0.5.0
 
 ## ChangeLog
 1. __v0.1.0__:
@@ -21,9 +21,12 @@ guardar y abrir fichero
 - Creacion de la clase DialogReplace y finalizada implementacion de cuadro de dialogo Reemplazar y su respectiva funcionlidad
 - Comentada clase Window.
 
-3. __v0.4.0__:
+4. __v0.4.0__:
 - Implementación de botones para copiar y pegar en la barra de herramientas
 - Implementada funcionalidad de los botones para copiar y pegar de la barra de herramientas
 - Implementados items del menu editar con funciones de copiar y pegar
 
+5. __v0.5.0__:
+- Implementacion de barra de busqueda para buscar palabras en el texto
+- Implementación de funcionalidad de busqueda de palabras (todas las coincidencias)
 
