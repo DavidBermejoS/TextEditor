@@ -31,6 +31,8 @@ public class Window {
     JMenuItem itemSaveAs;
     JMenuItem itemLoad;
     JMenuItem itemReplace;
+    JMenuItem itemCopy;
+    JMenuItem itemPaste;
 
     JToolBar toolBar;
 
@@ -106,6 +108,20 @@ public class Window {
         itemReplace.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
         itemReplace.setMnemonic(KeyEvent.VK_R);
         menuEdit.add(itemReplace);
+
+
+        menuEdit.addSeparator();
+        //agregado boton copiar
+        itemCopy = new JMenuItem("Copiar");
+        itemCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,ActionEvent.CTRL_MASK));
+        itemCopy.setMnemonic(KeyEvent.VK_C);
+        menuEdit.add(itemCopy);
+
+        //agregado boton pegar
+        itemPaste = new JMenuItem("Pegar");
+        itemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.CTRL_MASK));
+        itemPaste.setMnemonic(KeyEvent.VK_V);
+        menuEdit.add(itemPaste);
 
         //agregado de campo de texto
         textArea = new JTextArea("\n\n\t[BIENVENIDO AL EDITOR DE TEXTO]\n\n\tPulsa Cargar para abrir un fichero...");
@@ -217,6 +233,43 @@ public class Window {
             }
         });
 
+        itemCopy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(new StringSelection(textArea.getSelectedText()), null);
+            }
+        });
+
+        itemPaste.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable t = cb.getContents(this);
+
+                DataFlavor dataFlavorStringJava = null;
+                try {
+                    dataFlavorStringJava = new DataFlavor("application/x-java-serialized-object; class=java.lang.String");
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (t.isDataFlavorSupported(dataFlavorStringJava)) {
+                    String texto = null;
+                    try {
+                        texto = (String) t.getTransferData(dataFlavorStringJava);
+                        //se encarga de insertar el texto del portapapeles en la posicion del cursor
+                        textArea.insert(texto,textArea.getCaretPosition());
+                    } catch (UnsupportedFlavorException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -248,6 +301,7 @@ public class Window {
                 }
             }
         });
+
 
         buttonCopy.addActionListener(new ActionListener() {
             @Override

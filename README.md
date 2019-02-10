@@ -24,5 +24,6 @@ guardar y abrir fichero
 3. __v0.4.0__:
 - Implementación de botones para copiar y pegar en la barra de herramientas
 - Implementada funcionalidad de los botones para copiar y pegar de la barra de herramientas
+- Implementados items del menu editar con funciones de copiar y pegar
 
 
