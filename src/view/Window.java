@@ -37,6 +37,8 @@ public class Window {
     JMenuItem itemReplace;
     JMenuItem itemCopy;
     JMenuItem itemPaste;
+    JMenuItem itemBackgroundColor;
+    JMenuItem itemForegroundColor;
 
     JToolBar toolBar;
 
@@ -134,6 +136,20 @@ public class Window {
         itemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
         itemPaste.setMnemonic(KeyEvent.VK_V);
         menuEdit.add(itemPaste);
+
+        menuEdit.addSeparator();
+
+        itemBackgroundColor = new JMenuItem("Color de Fondo");
+        itemBackgroundColor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,ActionEvent.CTRL_MASK));
+        itemBackgroundColor.setMnemonic(KeyEvent.VK_B);
+        menuEdit.add(itemBackgroundColor);
+
+
+        itemForegroundColor = new JMenuItem("Color del texto");
+        itemForegroundColor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F,ActionEvent.CTRL_MASK));
+        itemForegroundColor.setMnemonic(KeyEvent.VK_F);
+        menuEdit.add(itemForegroundColor);
+
 
         //agregado de campo de texto
         textArea = new JTextArea("\n\n\t[BIENVENIDO AL EDITOR DE TEXTO]\n\n\tPulsa Cargar para abrir un fichero...");
@@ -287,6 +303,22 @@ public class Window {
                     }
 
                 }
+            }
+        });
+
+        itemBackgroundColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color color = JColorChooser.showDialog(frame,"Selecciona un color",Color.WHITE);
+                textArea.setBackground(color);
+            }
+        });
+
+        itemForegroundColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color color = JColorChooser.showDialog(frame,"Selecciona un color",Color.BLACK);
+                textArea.setForeground(color);
             }
         });
 

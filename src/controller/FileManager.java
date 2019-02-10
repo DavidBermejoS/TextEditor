@@ -6,6 +6,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 
 /**
+ * Clase FileManager
  * @author David Bermejo Simon
  **/
 public class FileManager {
