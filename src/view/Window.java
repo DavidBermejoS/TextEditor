@@ -53,6 +53,9 @@ public class Window {
     JTextArea textArea;
     FileManager fm;
     boolean fileWriteable;
+    int wordPosition;
+    int lastWordPosition;
+    private Object last;
 
 
     /**
@@ -64,6 +67,8 @@ public class Window {
         this.frame.setBounds(0, 0, 800, 600);
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         fm = new FileManager(frame);
+        wordPosition = 0;
+        lastWordPosition = 0;
     }
 
     /**
@@ -325,7 +330,6 @@ public class Window {
             }
         });
 
-        //fragmento obtenido de la página: http://chuwiki.chuidiang.org/index.php?title=Uso_del_Clipboard_del_sistema
         buttonPaste.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -376,15 +380,20 @@ public class Window {
                     Highlighter highliter = textArea.getHighlighter();
                     Document doc = textArea.getDocument();
                     String text = doc.getText(0,doc.getLength());
-                    int position = 0;
-                    while((position=text.toUpperCase().indexOf(wordToFind.toUpperCase(),position))>=0){
-                        highliter.addHighlight(position,position+wordToFind.length(),myHighlight);
-                        position += wordToFind.length();
+                    if((wordPosition=text.toUpperCase().indexOf(wordToFind.toUpperCase(),wordPosition))>=0){
+                        if(last != null){
+                            textArea.getHighlighter().removeHighlight(last);
+                        }
+                        last = highliter.addHighlight(wordPosition,wordPosition+wordToFind.length(),myHighlight);
+                        wordPosition += wordToFind.length();
+                    }else{
+                        JOptionPane.showMessageDialog(frame,"No se encontraron mas resultados","Fin de Busqueda",JOptionPane.INFORMATION_MESSAGE);
+                        wordPosition=0;
+                        textArea.getHighlighter().removeAllHighlights();
                     }
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
