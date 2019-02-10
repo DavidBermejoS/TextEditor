@@ -1,6 +1,5 @@
 package view;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,25 +7,28 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
+import controller.DialogReplace;
 import controller.FileManager;
 
 
 /**
+ * <h2>Clase Window</h2>
+ *
  * @author David Bermejo Simon
  **/
 public class Window {
 
     JFrame frame;
     JMenuBar menuBar;
-    JMenu menu;
+    JMenu menuFile;
+    JMenu menuEdit;
 
     JMenuItem itemExit;
     JMenuItem itemSave;
     JMenuItem itemSaveAs;
     JMenuItem itemLoad;
+    JMenuItem itemReplace;
 
     JToolBar toolBar;
 
@@ -39,8 +41,10 @@ public class Window {
     boolean fileWriteable;
 
 
-
-
+    /**
+     * Constructor de la clase donde se da medidas a la ventana, se le da un titulo y se le
+     * asigna una operación de cierre. Ademas se instancia un objeto FileManager
+     */
     public Window(){
         this.frame = new JFrame("Editor de Texto Swing");
         this.frame.setBounds(0,0,800,600);
@@ -48,44 +52,55 @@ public class Window {
         fm = new FileManager(frame);
     }
 
-
+    /**
+     * Metodo encargado de agregar los componentes a la ventana
+     */
     public void addComponents(){
-        //agregado de barra de menu
+        //agregado de barra de menuFile
         frame.setLayout(new BorderLayout());
         menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
-        menu = new JMenu("Archivo");
-        menuBar.add(menu);
+        menuFile = new JMenu("Archivo");
+        menuEdit = new JMenu("Editar");
+
+        menuBar.add(menuFile);
+        menuBar.add(menuEdit);
 
         //agregado boton de carga
         itemLoad = new JMenuItem("Cargar");
         itemLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         itemLoad.setMnemonic(KeyEvent.VK_O);
-        menu.add(itemLoad);
+        menuFile.add(itemLoad);
 
-        menu.addSeparator();
+        menuFile.addSeparator();
 
         //agregado boton de guardar
         itemSave = new JMenuItem("Guardar");
         itemSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         itemSave.setMnemonic(KeyEvent.VK_S);
         itemSave.setEnabled(false);
-        menu.add(itemSave);
+        menuFile.add(itemSave);
 
         //agregado boton de guardar como
         itemSaveAs = new JMenuItem("Guardar Como");
         itemSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G,ActionEvent.CTRL_MASK));
         itemSaveAs.setMnemonic(KeyEvent.VK_G);
         itemSaveAs.setEnabled(false);
-        menu.add(itemSaveAs);
+        menuFile.add(itemSaveAs);
 
-        menu.addSeparator();
+        menuFile.addSeparator();
 
         //agregado boton de salir
         itemExit = new JMenuItem("Salir");
         itemExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
         itemExit.setMnemonic(KeyEvent.VK_E);
-        menu.add(itemExit);
+        menuFile.add(itemExit);
+
+        //agregado boton reemplazar
+        itemReplace = new JMenuItem("Reemplazar");
+        itemReplace.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+        itemReplace.setMnemonic(KeyEvent.VK_R);
+        menuEdit.add(itemReplace);
 
         //agregado de campo de texto
         textArea = new JTextArea("\n\n\t[BIENVENIDO AL EDITOR DE TEXTO]\n\n\tPulsa Cargar para abrir un fichero...");
@@ -180,6 +195,16 @@ public class Window {
             }
         });
 
+        itemReplace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileWriteable){
+                    DialogReplace dialogReplace = new DialogReplace(frame,"Reemplazar",false,textArea);
+                }
+
+            }
+        });
+
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,6 +239,9 @@ public class Window {
     }
 
 
+    /**
+     * Metodo encargado de inicializar la ventana y hacerla visible
+     */
     public void startWindow(){
         this.frame.setVisible(true);
         addComponents();
