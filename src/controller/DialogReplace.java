@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase DialogReplace
+ * @author David Bermejo Simon
+ */
 public class DialogReplace extends JDialog {
 
     JFrame owner;

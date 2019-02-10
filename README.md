@@ -1,7 +1,7 @@
 # TextEditor
 Editor de Texto sencillo Realizado para el módulo de Desarrollo de Interfaces en el ciclo de Desarrollo para Aplicaciones Multiplataforma
 
-#### Actual Version = v0.5.0
+#### Actual Version = v0.6.0
 
 ## ChangeLog
 1.__v0.1.0__:
@@ -31,4 +31,10 @@ guardar y abrir fichero
 - Implementación de funcionalidad de busqueda de palabras (todas las coincidencias)
 - Implementación de funcionalidad final de busqueda palabra por palabra cada vez que se clickea
 el boton de busqueda (hasta fin de busqueda)
+
+
+6.__v0.6.0__:
+- Implementación de items de menu para cambiar color de fondo y color de fuente
+- Documentadas clases
+
 
