@@ -182,7 +182,10 @@ public class Window {
         buttonPaste.setIcon(getIconImage("resources/imagenes/paste.png"));
         toolBar.add(buttonPaste, BorderLayout.LINE_START);
 
+        toolBar.add(Box.createHorizontalGlue());
+
         searchWord = new JTextField();
+        searchWord.setMaximumSize(new Dimension(200,40));
         toolBar.add(searchWord, BorderLayout.LINE_END);
 
         buttonSearch = new JButton();
