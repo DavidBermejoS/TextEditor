@@ -1,7 +1,7 @@
 # TextEditor
 Editor de Texto sencillo Realizado para el módulo de Desarrollo de Interfaces en el ciclo de Desarrollo para Aplicaciones Multiplataforma
 
-#### Actual Version = v1.0.0
+#### Actual Version = v1.0.1
 
 ## ChangeLog
 1.__v0.1.0__:
@@ -36,5 +36,11 @@ el boton de busqueda (hasta fin de busqueda)
 6.__v0.6.0__:
 - Implementación de items de menu para cambiar color de fondo y color de fuente
 - Documentadas clases
+
+7.__v1.0.0__:
+- Release 1.0.0
+
+8.__v1.0.1__:
+- Arreglado posicionamiento de la barra de busqueda por palabra
 
 
